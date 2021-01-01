@@ -9,38 +9,54 @@
 
 <body>
     <div>
-        <form action="main2.js" name="calculadora" id="calculadora">
-            <p id="textoPantalla">0</p>
-            <p>
-                <input type="button"  value="Retr" onclick="retro()" />
-                <input type="button"  value="C" onclick="borradoTotal()" />
-            </p>
-            <p>
-                <input type="button" value="7" onclick="numero('7')" />
-                <input type="button" value="8" onclick="numero('8')" />
-                <input type="button" value="9" onclick="numero('9')" />
-                <input type="button" value="/" onclick="operar('/')" />
-            </p>
-            <p>
-                <input type="button" value="4" onclick="numero('4')" />
-                <input type="button" value="5" onclick="numero('5')" />
-                <input type="button" value="6" onclick="numero('6')" />
-                <input type="button" value="*" onclick="operar('*')" />
-            </p>
-            <p>
-                <input type="button" value="1" onclick="numero('1')" />
-                <input type="button" value="2" onclick="numero('2')" />
-                <input type="button" value="3" onclick="numero('3')" />
-                <input type="button" value="-" onclick="operar('-')" />
-            </p>
-            <p>
-                <input type="button" value="0" onclick="numero('0')" />
-                <input type="button" value="." onclick="numero('.')" />
-                <input type="button" value="+" onclick="operar('+')" />
-                <input type="button" value="=" onclick="igualar()" />
-            </p>
-        </form>
+        <!--Pantalla-->
+        <div>
+            <input type="text" id="inpPantalla" placeholder="0" disabled>
+        </div>
+        <!--Teclado-->
+        <div>
+            <!--Botonos de memoria-->
+            <div>
+                <input type="button" id="btnM" value="M">
+                <input type="button" id="btnMM" value="M+">
+                <input type="button" id="btnMMe" value="M-">
+            </div>
+            <!-- 7, 8, 9 -->
+            <div>
+                <input type="button" id="btn07" value="7">
+                <input type="button" id="btn08" value="8">
+                <input type="button" id="btn09" value="9">
+            </div>
+            <!-- 4, 5, 6 -->
+            <div>
+                <input type="button" id="btn04" value="4">
+                <input type="button" id="btn05" value="5">
+                <input type="button" id="btn06" value="6">
+            </div>
+            <!-- 3, 2, 1 -->
+            <div>
+                <input type="button" id="btn03" value="3">
+                <input type="button" id="btn02" value="2">
+                <input type="button" id="btn01" value="1">
+            </div>
+            <!--0, . -->
+            <div>
+                <input type="button" id="" value="">
+                <input type="button" id="btn00" value="0">
+                <input type="button" id="btn0P" value=".">
+            </div>
+            <!--Barra lateral(c, +, -, *, /, =)-->
+            <div>
+                <input type="button" id="btnC" value="c">
+                <input type="button" id="btnMas" value="+">
+                <input type="button" id="btnMenos" value="-">
+                <input type="button" id="btnD" value="/">
+                <input type="button" id="btnX" value="X">
+                <input type="button" id="btnIg" value="=">
+            </div>
+        </div>
     </div>
 </body>
 <script src="main.js"></script>
+
 </html>
