@@ -1,9 +1,9 @@
 var inpP01 = document.querySelector('#inpPantalla')
 class Operacion {
     constructor(numero) {
-        this.ope = numero
-        this.right = null
-        this.left = null
+        this.node = numero
+        this.rightS = null
+        this.leftA = null
     }
 }
 class Calculadora {
@@ -24,7 +24,7 @@ class Calculadora {
             this.op = 0
             return this.mostrar()
         } else if (x == '.') {
-            if(this.punto == 0){
+            if (this.punto == 0) {
                 if (this.exp == null) this.exp = String(x)
                 this.exp += String(x)
                 this.op = 0
@@ -32,17 +32,42 @@ class Calculadora {
                 return this.mostrar()
             }
         } else {
-            this.op = 1
-            this.punto = 0
-            this.exp += String(x)
-            return this.mostrar()
+            if (this.op == 0) {
+                this.exp += String(x)
+                this.op = 1
+                this.punto = 0
+                return this.mostrar()
+            }
         }
     }
-    gBinatyTree(){
+    gBinatyTree() {
+        if (this.exp != null) {
+            for (let i = 0; i <= this.exp.length; i++) {
+                let ope = new Operacion((this.exp.charAt(i)))
+                if (this.raiz === null) {
+                    this.raiz = ope
+                }
+                else {
+                    let aux = this.raiz
+                    while (aux.rightS != null) {
+                        aux = aux.rightS
+                    }
+                    aux.rightS = ope
+                    ope.leftA = aux
+                }
+            }
+            let aux = this.raiz
+            while (aux != null) {
+                console.log(aux)
+                aux = aux.rightS
+            }
+            this.exp = null
+        }
 
     }
     mostrar() {
         inpP01.value = this.exp
+
     }
 }
 var calcu = new Calculadora()
