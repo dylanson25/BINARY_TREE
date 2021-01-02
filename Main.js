@@ -32,7 +32,7 @@ class Calculadora {
                 return this.mostrar()
             }
         } else {
-            if (this.op == 0) {
+            if (this.op == 0 && inpP01.value != 0) {
                 this.exp += String(x)
                 this.op = 1
                 this.punto = 0
@@ -41,8 +41,8 @@ class Calculadora {
         }
     }
     gBinatyTree() {
-        if (this.exp != null) {
-            for (let i = 0; i <= this.exp.length; i++) {
+        if (this.exp != null) {//convertir exprecion en lista doble
+            for (let i = 0; i < this.exp.length; i++) {
                 let ope = new Operacion((this.exp.charAt(i)))
                 if (this.raiz === null) {
                     this.raiz = ope
@@ -61,13 +61,13 @@ class Calculadora {
                 console.log(aux)
                 aux = aux.rightS
             }
-            this.exp = null
         }
+        this.raiz = null
+        this.exp = null
 
     }
     mostrar() {
         inpP01.value = this.exp
-
     }
 }
 var calcu = new Calculadora()
@@ -123,5 +123,13 @@ btnX.addEventListener("click", () => {
     calcu.agregar('*')
 })
 btnIg.addEventListener("click", () => {
-    calcu.gBinatyTree()
+    if (inpP01.value != 0) {
+        let comp = inpP01.value.charAt(inpP01.value.length - 1)
+        if (comp === '*' || comp === '/' || comp === '-' || comp === '+' === this.exp) {
+            return alert('Syntaxis Error')
+        } else {
+            calcu.gBinatyTree()
+        }
+    }
+
 })
