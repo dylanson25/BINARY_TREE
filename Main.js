@@ -10,41 +10,39 @@ class Calculadora {
     constructor() {
         this.raiz = null
         this.exp = null
+        this.op = 0
+        this.punto = 0
     }
     agregar(x) {
-        if (x >= 0 && x < 10 || x == '.') {
-            if (this.exp == null){ 
+        if (x >= 0 && x < 10) {
+            if (this.exp == null) {
                 this.exp = String(x)
             }
             else {
-                if( this.exp.indexOf('.') == -1) this.exp += String(x)  
-                else if(x != '.') 
-                    this.exp += String(x)
+                this.exp += String(x)
             }
-            
+            this.op = 0
             return this.mostrar()
-        } else{
-            this.agregarBT(x)
+        } else if (x == '.') {
+            if(this.punto == 0){
+                if (this.exp == null) this.exp = String(x)
+                this.exp += String(x)
+                this.op = 0
+                this.punto = 1
+                return this.mostrar()
+            }
+        } else {
+            this.op = 1
+            this.punto = 0
+            this.exp += String(x)
             return this.mostrar()
-        } 
-    }
-    agregarBT(x){
-        let ope = new Operacion(x)
-        let cifra = new Operacion(this.exp)
-        if(this.raiz == null){
-            this.raiz = ope
-            this.raiz.left = cifra
-        }else if(this.raiz.right == null){
-            this.raiz.right = cifra
         }
-        
+    }
+    gBinatyTree(){
+
     }
     mostrar() {
-        if(this.raiz == null){
-            inpP01.value = this.exp
-        }else if(this.raiz.right == null){
-            inpP01.value = this.raiz.left.ope + this.raiz.ope
-        }
+        inpP01.value = this.exp
     }
 }
 var calcu = new Calculadora()
@@ -100,5 +98,5 @@ btnX.addEventListener("click", () => {
     calcu.agregar('*')
 })
 btnIg.addEventListener("click", () => {
-    calcu.agregar('=')
+    calcu.gBinatyTree()
 })
