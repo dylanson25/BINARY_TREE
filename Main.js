@@ -72,7 +72,7 @@ class Calculadora {
                     i++
                 }
                 if(i === (this.exp.length)){
-                    this.guardar(numEntero)
+                    this.guardar(Number(numEntero))
                     numEntero = ''
                 } 
             }
