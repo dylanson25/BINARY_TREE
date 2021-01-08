@@ -42,18 +42,18 @@ class Calculadora {
             }
         }
     }
-    guardar(x){
+    guardar(x) {
         var ope = new Operacion(x)
-                    if (this.raiz === null) {
-                        this.raiz = ope
-                    } else {
-                        let aux = this.raiz
-                        while (aux.siguiente != null) {
-                            aux = aux.siguiente
-                        }
-                        aux.siguiente = ope
-                        ope.anterior = aux
-                    }
+        if (this.raiz === null) {
+            this.raiz = ope
+        } else {
+            let aux = this.raiz
+            while (aux.siguiente != null) {
+                aux = aux.siguiente
+            }
+            aux.siguiente = ope
+            ope.anterior = aux
+        }
     }
     generarListaDoble() {
         if (this.exp != null) {//convertir exprecion en lista doble
@@ -61,28 +61,61 @@ class Calculadora {
             let numEntero = ''
             while (i < this.exp.length) {
                 let num = this.exp.charAt(i)
-                if (num != '*' && num != '/' && num != '-' && num != '+'&& num != '^' && num != 'R') {
+                if (num != '*' && num != '/' && num != '-' && num != '+' && num != '^' && num != 'R') {
                     numEntero += String(num)
                     i++
                 } else {
-                    console.log(this.exp.charAt(i))
                     this.guardar(Number(numEntero))
                     this.guardar(String(this.exp.charAt(i)))
                     numEntero = ''
                     i++
                 }
-                if(i === (this.exp.length)){
+                if (i === (this.exp.length)) {
                     this.guardar(Number(numEntero))
                     numEntero = ''
-                } 
+                }
             }
-            console.log(this.raiz)
+            console.log('Lista doble '+this.raiz)
+            this.inorden()
         }
+    }
+    chijos(aux) {
+        aux.left = aux.anterior
+        aux.right = aux.siguiente
+
+        if(aux.siguiente != null){
+            aux.siguiente = aux.siguiente.siguiente
+            if (aux.siguiente != null)aux.siguiente.anterior = aux
+        } 
+        if(aux.anterior != null){
+            aux.anterior = aux.anterior.anterior
+            if (aux.anterior != null)aux.anterior.siguiente = aux
+        } 
+        
+        if (aux.left != null) {
+            aux.left.siguiente = null
+            aux.left.anterior = null
+        }
+        if (aux.right != null) {
+            aux.right.siguiente = null
+            aux.right.anterior = null
+        } 
     }
     inorden() {
         let aux = this.raiz
-        while (aux != null && aux != '*' && aux != '/') {
-            
+        while (aux != null) {
+            if (aux.node === '*' || aux.node === '/') {
+                this.chijos(aux)
+            }
+            aux = aux.siguiente
+        }
+        aux = this.raiz
+        while (aux != null) {
+            if (aux.node === '+' || aux.node === '-') {
+                this.chijos(aux)
+                console.log(this.raiz)
+            }
+            aux = aux.siguiente
         }
     }
     borrar() {
@@ -155,7 +188,7 @@ btnRaiz.addEventListener("click", () => {
 btnIg.addEventListener("click", () => {
     if (inpP01.value != 0) {
         let comp = inpP01.value.charAt(inpP01.value.length - 1)
-        if (comp === '*' || comp === '/' || comp === '-' || comp === '+'|| comp === '^' || comp === 'R') {
+        if (comp === '*' || comp === '/' || comp === '-' || comp === '+' || comp === '^' || comp === 'R') {
             return alert('Syntaxis Error')
         } else {
             calcu.generarListaDoble()
