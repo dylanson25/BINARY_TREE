@@ -4,6 +4,8 @@ class Operacion {
         this.node = numero
         this.rightS = null
         this.leftA = null
+        this.siguiente = null
+        this.anterior = null
     }
 }
 class Calculadora {
@@ -42,29 +44,43 @@ class Calculadora {
     }
     gBinatyTree() {
         if (this.exp != null) {//convertir exprecion en lista doble
-            for (let i = 0; i < this.exp.length; i++) {
-                let ope = new Operacion((this.exp.charAt(i)))
-                if (this.raiz === null) {
-                    this.raiz = ope
-                }
-                else {
-                    let aux = this.raiz
-                    while (aux.rightS != null) {
-                        aux = aux.rightS
+            let i = 0
+            let numEntero
+            while (i < this.exp.length) {
+                let num = this.exp.charAt(i)
+                if (num != '*' && num != '/' && num != '-' && num != '+') {
+                    
+                } else {
+                    if (this.raiz === null) {
+                        this.raiz = ope
+                    } else {
+                        let aux = this.raiz
+                        while (aux.rightS != null) {
+                            aux = aux.rightS
+                        }
+                        aux.rightS = ope
+                        ope.leftA = aux
                     }
-                    aux.rightS = ope
-                    ope.leftA = aux
-                }
-            }
-            let aux = this.raiz
-            while (aux != null) {
-                console.log(aux)
-                aux = aux.rightS
+                    console.log(this.raiz)
+                } 
             }
         }
         this.raiz = null
         this.exp = null
-
+    }
+    inorden() {
+        let aux = this.raiz
+        while (aux != null && aux != '*' && aux != '/') {
+            aux = aux.rightS
+        }
+        aux.rightS.rightS = null
+        aux.rightS.leftA = null
+        aux.leftA.rightS = null
+        aux.leftA.leftA = null
+    }
+    borrar() {
+        inpP01.value = 0
+        this.exp = null
     }
     mostrar() {
         inpP01.value = this.exp
@@ -108,7 +124,7 @@ btn0P.addEventListener("click", () => {
     calcu.agregar('.')
 })
 btnC.addEventListener("click", () => {
-
+    calcu.borrar()
 })
 btnMas.addEventListener("click", () => {
     calcu.agregar('+')
@@ -125,11 +141,10 @@ btnX.addEventListener("click", () => {
 btnIg.addEventListener("click", () => {
     if (inpP01.value != 0) {
         let comp = inpP01.value.charAt(inpP01.value.length - 1)
-        if (comp === '*' || comp === '/' || comp === '-' || comp === '+' === this.exp) {
+        if (comp === '*' || comp === '/' || comp === '-' || comp === '+') {
             return alert('Syntaxis Error')
         } else {
             calcu.gBinatyTree()
         }
     }
-
 })
