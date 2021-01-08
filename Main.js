@@ -84,7 +84,7 @@ class Calculadora {
     inorden() {
         let aux = this.raiz
         while (aux != null) {
-            if (aux.node === '+' || aux.node === '-') {
+            if (aux.node === 'R' || aux.node === '^') {
                 aux.left = aux.anterior
                 aux.right = aux.siguiente
 
@@ -106,14 +106,12 @@ class Calculadora {
                     aux.right.anterior = null
                 }
                 if(aux.anterior === null && aux.siguiente == null) this.raiz = aux
-                
-                console.log(this.raiz)
             }
             aux = aux.siguiente
         }
         aux = this.raiz
         while (aux != null) {
-            if (aux.node === 'R' || aux.node === '^') {
+            if (aux.node === '*' || aux.node === '/') {
                 aux.left = aux.anterior
                 aux.right = aux.siguiente
 
