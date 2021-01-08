@@ -2,8 +2,8 @@ var inpP01 = document.querySelector('#inpPantalla')
 class Operacion {
     constructor(numero) {
         this.node = numero
-        this.rightS = null
-        this.leftA = null
+        this.right = null
+        this.left = null
         this.siguiente = null
         this.anterior = null
     }
@@ -42,28 +42,41 @@ class Calculadora {
             }
         }
     }
-    gBinatyTree() {
-        if (this.exp != null) {//convertir exprecion en lista doble
-            let i = 0
-            let numEntero
-            while (i < this.exp.length) {
-                let num = this.exp.charAt(i)
-                if (num != '*' && num != '/' && num != '-' && num != '+') {
-                    
-                } else {
+    guardar(x){
+        var ope = new Operacion(x)
                     if (this.raiz === null) {
                         this.raiz = ope
                     } else {
                         let aux = this.raiz
-                        while (aux.rightS != null) {
-                            aux = aux.rightS
+                        while (aux.siguiente != null) {
+                            aux = aux.siguiente
                         }
-                        aux.rightS = ope
-                        ope.leftA = aux
+                        aux.siguiente = ope
+                        ope.anterior = aux
                     }
-                    console.log(this.raiz)
+    }
+    gBinatyTree() {
+        if (this.exp != null) {//convertir exprecion en lista doble
+            let i = 0
+            let numEntero = ''
+            while (i < this.exp.length) {
+                let num = this.exp.charAt(i)
+                if (num != '*' && num != '/' && num != '-' && num != '+') {
+                    numEntero += String(num)
+                    i++
+                } else {
+                    console.log(this.exp.charAt(i))
+                    this.guardar(Number(numEntero))
+                    this.guardar(String(this.exp.charAt(i)))
+                    numEntero = ''
+                    i++
+                }
+                if(i === (this.exp.length)){
+                    this.guardar(numEntero)
+                    numEntero = ''
                 } 
             }
+            console.log(this.raiz)
         }
         this.raiz = null
         this.exp = null
