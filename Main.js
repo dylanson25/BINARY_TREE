@@ -55,13 +55,13 @@ class Calculadora {
                         ope.anterior = aux
                     }
     }
-    gBinatyTree() {
+    generarListaDoble() {
         if (this.exp != null) {//convertir exprecion en lista doble
             let i = 0
             let numEntero = ''
             while (i < this.exp.length) {
                 let num = this.exp.charAt(i)
-                if (num != '*' && num != '/' && num != '-' && num != '+') {
+                if (num != '*' && num != '/' && num != '-' && num != '+'&& num != '^' && num != 'R') {
                     numEntero += String(num)
                     i++
                 } else {
@@ -78,21 +78,16 @@ class Calculadora {
             }
             console.log(this.raiz)
         }
-        this.raiz = null
-        this.exp = null
     }
     inorden() {
         let aux = this.raiz
         while (aux != null && aux != '*' && aux != '/') {
-            aux = aux.rightS
+            
         }
-        aux.rightS.rightS = null
-        aux.rightS.leftA = null
-        aux.leftA.rightS = null
-        aux.leftA.leftA = null
     }
     borrar() {
         inpP01.value = 0
+        this.raiz = null
         this.exp = null
     }
     mostrar() {
@@ -151,13 +146,19 @@ btnD.addEventListener("click", () => {
 btnX.addEventListener("click", () => {
     calcu.agregar('*')
 })
+btnPot.addEventListener("click", () => {
+    calcu.agregar('^')
+})
+btnRaiz.addEventListener("click", () => {
+    calcu.agregar('R')
+})
 btnIg.addEventListener("click", () => {
     if (inpP01.value != 0) {
         let comp = inpP01.value.charAt(inpP01.value.length - 1)
-        if (comp === '*' || comp === '/' || comp === '-' || comp === '+') {
+        if (comp === '*' || comp === '/' || comp === '-' || comp === '+'|| comp === '^' || comp === 'R') {
             return alert('Syntaxis Error')
         } else {
-            calcu.gBinatyTree()
+            calcu.generarListaDoble()
         }
     }
 })
