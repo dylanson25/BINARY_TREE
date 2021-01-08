@@ -79,60 +79,42 @@ class Calculadora {
         }
     }
     chijos(aux) {
+        aux.left = aux.anterior
+        aux.right = aux.siguiente
+
+        if(aux.siguiente != null){
+            aux.siguiente = aux.siguiente.siguiente
+            if (aux.siguiente != null)aux.siguiente.anterior = aux
+        } 
+        if(aux.anterior != null){
+            aux.anterior = aux.anterior.anterior
+            if (aux.anterior != null)aux.anterior.siguiente = aux
+        } 
         
+        if (aux.left != null) {
+            aux.left.siguiente = null
+            aux.left.anterior = null
+        }
+        if (aux.right != null) {
+            aux.right.siguiente = null
+            aux.right.anterior = null
+        }
+        if(aux.anterior === null && aux.siguiente == null) this.raiz = aux
+        
+        return aux
     }
     inorden() {
         let aux = this.raiz
         while (aux != null) {
             if (aux.node === 'R' || aux.node === '^') {
-                aux.left = aux.anterior
-                aux.right = aux.siguiente
-
-                if(aux.siguiente != null){
-                    aux.siguiente = aux.siguiente.siguiente
-                    if (aux.siguiente != null)aux.siguiente.anterior = aux
-                } 
-                if(aux.anterior != null){
-                    aux.anterior = aux.anterior.anterior
-                    if (aux.anterior != null)aux.anterior.siguiente = aux
-                } 
-                
-                if (aux.left != null) {
-                    aux.left.siguiente = null
-                    aux.left.anterior = null
-                }
-                if (aux.right != null) {
-                    aux.right.siguiente = null
-                    aux.right.anterior = null
-                }
-                if(aux.anterior === null && aux.siguiente == null) this.raiz = aux
+                aux = this.chijos(aux)
             }
             aux = aux.siguiente
         }
         aux = this.raiz
         while (aux != null) {
             if (aux.node === '*' || aux.node === '/') {
-                aux.left = aux.anterior
-                aux.right = aux.siguiente
-
-                if(aux.siguiente != null){
-                    aux.siguiente = aux.siguiente.siguiente
-                    if (aux.siguiente != null)aux.siguiente.anterior = aux
-                } 
-                if(aux.anterior != null){
-                    aux.anterior = aux.anterior.anterior
-                    if (aux.anterior != null)aux.anterior.siguiente = aux
-                } 
-                
-                if (aux.left != null) {
-                    aux.left.siguiente = null
-                    aux.left.anterior = null
-                }
-                if (aux.right != null) {
-                    aux.right.siguiente = null
-                    aux.right.anterior = null
-                }
-                if(aux.anterior === null && aux.siguiente == null) this.raiz = aux
+                aux = this.chijos(aux)
             }
             aux = aux.siguiente
         }
@@ -141,28 +123,7 @@ class Calculadora {
         console.log(aux)
        while (aux != null) {
             if (aux.node === '+' || aux.node === '-') {
-                aux.left = aux.anterior
-                aux.right = aux.siguiente
-
-                if(aux.siguiente != null){
-                    aux.siguiente = aux.siguiente.siguiente
-                    if (aux.siguiente != null)aux.siguiente.anterior = aux
-                } 
-                if(aux.anterior != null){
-                    aux.anterior = aux.anterior.anterior
-                    if (aux.anterior != null)aux.anterior.siguiente = aux
-                } 
-                
-                if (aux.left != null) {
-                    aux.left.siguiente = null
-                    aux.left.anterior = null
-                }
-                if (aux.right != null) {
-                    aux.right.siguiente = null
-                    aux.right.anterior = null
-                }
-                if(aux.anterior === null && aux.siguiente == null) this.raiz = aux
-                
+               aux = this.chijos(aux)
                 console.log(this.raiz)
             }
             aux = aux.siguiente
