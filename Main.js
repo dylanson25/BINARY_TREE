@@ -122,9 +122,7 @@ class Calculadora {
             }
             aux = aux.siguiente
         }
-
         aux = this.raiz
-        console.log(aux)
         while (aux != null) {
             if (aux.node === '+' || aux.node === '-') {
                 aux = this.chijos(aux)
