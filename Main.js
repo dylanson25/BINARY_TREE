@@ -82,11 +82,17 @@ class Calculadora {
         aux.left = aux.anterior
         aux.right = aux.siguiente
 
-        aux.siguiente = aux.siguiente.siguiente
-        if (aux.siguiente != null) aux.siguiente.anterior = aux
+        if (aux.anterior.node === this.raiz.node) this.raiz = aux 
 
-        aux.anterior = aux.anterior.anterior
-        if (aux.anterior != null) aux.anterior.siguiente = aux
+        if (aux.siguiente != null) {
+            aux.siguiente = aux.siguiente.siguiente
+            if (aux.siguiente != null) aux.siguiente.anterior = aux
+        }
+
+        if (aux.anterior != null) {
+            aux.anterior = aux.anterior.anterior
+            if (aux.anterior != null) aux.anterior.siguiente = aux
+        }
 
         if (aux.left != null) {
             aux.left.siguiente = null
@@ -97,6 +103,7 @@ class Calculadora {
             aux.right.anterior = null
         }
         if (aux.anterior === null && aux.siguiente == null) this.raiz = aux
+
 
         return aux
     }
@@ -125,6 +132,10 @@ class Calculadora {
             aux = aux.siguiente
         }
         console.log(this.raiz)
+    }
+    resolver(){
+        this.generarListaDoble()
+        
     }
     borrar() {
         inpP01.value = 0
@@ -199,7 +210,7 @@ btnIg.addEventListener("click", () => {
         if (comp === '*' || comp === '/' || comp === '-' || comp === '+' || comp === '^' || comp === 'R') {
             return alert('Syntaxis Error')
         } else {
-            calcu.generarListaDoble()
+            calcu.resolver()
         }
     }
 })
