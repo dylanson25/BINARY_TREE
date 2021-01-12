@@ -131,15 +131,8 @@ class Calculadora {
         let i = 0
         aux.lef = this.raiz.left
         aux.right = this.raiz.right
-        while (aux.lef != null) {
-            aux.siguiente = aux.left
-            aux.siguiente.anterior = aux
-            i++
-        }
-        while(aux.anterior != null) {
-            if(aux.anterior.right != null){
-                aux.siguiente = aux.anterior.right
-            } 
+        console.log(aux)
+        
         }
         console.log(aux)
     }else{
@@ -221,6 +214,16 @@ btnIg.addEventListener("click", () => {
             return alert('Syntaxis Error')
         } else {
             calcu.resolver()
+        }
+    }
+})
+Pre.addEventListener("click", ()=>{
+    if(inpP01 != 0){
+        let comp = inpP01.value.charAt(inpP01.value.length - 1)
+        if (comp === '*' || comp === '/' || comp === '-' || comp === '+' || comp === '^') {
+            return alert('Syntaxis Error')
+        } else {
+            calcu.preorden()
         }
     }
 })
