@@ -61,7 +61,7 @@ class Calculadora {
             let numEntero = ''
             while (i < this.exp.length) {
                 let num = this.exp.charAt(i)
-                if (num != '*' && num != '/' && num != '-' && num != '+' && num != '^' && num != 'R') {
+                if (num != '*' && num != '/' && num != '-' && num != '+' && num != '^') {
                     numEntero += String(num)
                     i++
                 } else {
@@ -82,7 +82,7 @@ class Calculadora {
         aux.left = aux.anterior
         aux.right = aux.siguiente
 
-        if (aux.anterior.node === this.raiz.node) this.raiz = aux 
+        if (aux.anterior.node === this.raiz.node) this.raiz = aux
 
         if (aux.siguiente != null) {
             aux.siguiente = aux.siguiente.siguiente
@@ -94,23 +94,17 @@ class Calculadora {
             if (aux.anterior != null) aux.anterior.siguiente = aux
         }
 
-        if (aux.left != null) {
-            aux.left.siguiente = null
-            aux.left.anterior = null
-        }
-        if (aux.right != null) {
-            aux.right.siguiente = null
-            aux.right.anterior = null
-        }
+        if (aux.left != null) aux.left.anterior = null
+
+        if (aux.right != null) aux.right.siguiente = null
+
         if (aux.anterior === null && aux.siguiente == null) this.raiz = aux
-
-
         return aux
     }
     inorden() {
         let aux = this.raiz
         while (aux != null) {
-            if (aux.node === 'R' || aux.node === '^') {
+            if (aux.node === '^') {
                 aux = this.chijos(aux)
             }
             aux = aux.siguiente
@@ -131,9 +125,30 @@ class Calculadora {
         }
         console.log(this.raiz)
     }
-    resolver(){
+    preorden() {
+        if(this.raiz.siguiente === null && this.raiz.anterior === null){
+        let aux = new Operacion(this.raiz.node)
+        let i = 0
+        aux.lef = this.raiz.left
+        aux.right = this.raiz.right
+        while (aux.lef != null) {
+            aux.siguiente = aux.left
+            aux.siguiente.anterior = aux
+            i++
+        }
+        while(aux.anterior != null) {
+            if(aux.anterior.right != null){
+                aux.siguiente = aux.anterior.right
+            } 
+        }
+        console.log(aux)
+    }else{
+        if(this.raiz != null) this.generarListaDoble()
+    }
+    }
+    resolver() {
         this.generarListaDoble()
-        
+
     }
     borrar() {
         inpP01.value = 0
@@ -199,13 +214,10 @@ btnX.addEventListener("click", () => {
 btnPot.addEventListener("click", () => {
     calcu.agregar('^')
 })
-btnRaiz.addEventListener("click", () => {
-    calcu.agregar('R')
-})
 btnIg.addEventListener("click", () => {
     if (inpP01.value != 0) {
         let comp = inpP01.value.charAt(inpP01.value.length - 1)
-        if (comp === '*' || comp === '/' || comp === '-' || comp === '+' || comp === '^' || comp === 'R') {
+        if (comp === '*' || comp === '/' || comp === '-' || comp === '+' || comp === '^') {
             return alert('Syntaxis Error')
         } else {
             calcu.resolver()
