@@ -82,7 +82,7 @@ class Calculadora {
         aux.left = aux.anterior
         aux.right = aux.siguiente
 
-        if (aux.anterior.node === this.raiz.node) this.raiz = aux
+        if (aux.anterior.anterior === null) this.raiz = aux
 
         if (aux.siguiente != null) {
             aux.siguiente = aux.siguiente.siguiente
@@ -94,11 +94,11 @@ class Calculadora {
             if (aux.anterior != null) aux.anterior.siguiente = aux
         }
 
-        if (aux.left != null) aux.left.anterior = null
-
-        if (aux.right != null) aux.right.siguiente = null
+        aux.left.anterior = null
+        aux.right.siguiente = null
 
         if (aux.anterior === null && aux.siguiente == null) this.raiz = aux
+        
         return aux
     }
     inorden() {
@@ -109,35 +109,36 @@ class Calculadora {
             }
             aux = aux.siguiente
         }
-        aux = this.raiz
-        while (aux != null) {
-            if (aux.node === '*' || aux.node === '/') {
-                aux = this.chijos(aux)
+        if (this.raiz.siguiente != null || this.raiz.anterior != null) {
+            aux = this.raiz
+            while (aux != null) {
+                if (aux.node === '*' || aux.node === '/') {
+                    aux = this.chijos(aux)
+                }
+                aux = aux.siguiente
             }
-            aux = aux.siguiente
         }
-        aux = this.raiz
-        while (aux != null) {
-            if (aux.node === '+' || aux.node === '-') {
-                aux = this.chijos(aux)
+        if (this.raiz.siguiente != null || this.raiz.anterior != null) {
+            aux = this.raiz
+            while (aux != null) {
+                if (aux.node === '+' || aux.node === '-') {
+                    aux = this.chijos(aux)
+                }
+                aux = aux.siguiente
             }
-            aux = aux.siguiente
         }
         console.log(this.raiz)
     }
     preorden() {
-        if(this.raiz.siguiente === null && this.raiz.anterior === null){
-        let aux = new Operacion(this.raiz.node)
-        let i = 0
-        aux.lef = this.raiz.left
-        aux.right = this.raiz.right
-        console.log(aux)
-        
+        if (this.raiz.siguiente === null && this.raiz.anterior === null) {
+            let aux = new Operacion(this.raiz.node)
+            let i = 0
+            aux.lef = this.raiz.left
+            aux.right = this.raiz.right
+            console.log(aux)
+        } else {
+            if (this.raiz != null) this.generarListaDoble()
         }
-        console.log(aux)
-    }else{
-        if(this.raiz != null) this.generarListaDoble()
-    }
     }
     resolver() {
         this.generarListaDoble()
@@ -217,8 +218,8 @@ btnIg.addEventListener("click", () => {
         }
     }
 })
-Pre.addEventListener("click", ()=>{
-    if(inpP01 != 0){
+Pre.addEventListener("click", () => {
+    if (inpP01 != 0) {
         let comp = inpP01.value.charAt(inpP01.value.length - 1)
         if (comp === '*' || comp === '/' || comp === '-' || comp === '+' || comp === '^') {
             return alert('Syntaxis Error')
