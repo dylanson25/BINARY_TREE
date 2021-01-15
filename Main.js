@@ -99,7 +99,7 @@ class Calculadora {
         aux.right.siguiente = null
 
         if (aux.anterior === null && aux.siguiente == null) this.raiz = aux
-        
+
         return aux
     }
     inorden() {
@@ -130,42 +130,89 @@ class Calculadora {
         }
         console.log(this.raiz)
     }
-    recorrerIzquierda(aux){
-        while(aux.left != null){
+    recorrerIzquierda(aux) {
+        while (aux.left != null) {
             this.pre.push(aux.left.node)
             aux = aux.left
         }
         return aux
     }
     preorden() {
-        if (this.raiz != null && this.raiz.siguiente === null && this.raiz.anterior === null) {
-            let aux = this.raiz
-            this.pre.push(aux.node)
-            aux = this.recorrerIzquierda(aux)
-            while(aux != null ){
-
-                if(aux.right != null){
+        if (this.raiz === null) {
+            this.generarListaDoble()
+        }
+        this.pre = []
+        let aux = this.raiz
+        this.pre.push(aux.node)
+        aux = this.recorrerIzquierda(aux)
+        while (aux != null) {
+            if (aux.right != null) {
+                this.pre.push(aux.right.node)
+                if (aux.right.left != null) {
+                    aux = this.recorrerIzquierda(aux.right)
+                }
+            }
+            if (aux.siguiente === null) {
+                if (aux.anterior === null) aux = aux.anterior
+                else aux = aux.anterior.siguiente
+            }
+            else if (aux.anterior === null) aux = aux.siguiente
+        }
+        let acum = ''
+        for (let i = 0; i < this.pre.length; i++) {
+            acum += String(this.pre[i])
+        }
+        inpP01.value = acum
+    }
+    recordIz(aux) {
+        while (aux.left != null) {
+            aux = aux.left
+        }
+        return aux
+    }
+    postorden() {
+        if (this.raiz === null) {
+            this.generarListaDoble()
+        }
+        let aux = this.raiz
+        aux = this.recordIz(aux)
+        
+        while (aux != null) {
+            
+            if (aux.right != null) {
+                
+                if (aux.left != null) {
+                    aux = this.recordIz(aux.right)
+                    this.pre.push(aux.node)
+                }else{
                     this.pre.push(aux.right.node)
-                    if(aux.right.left != null){
-                      aux =  this.recorrerIzquierda(aux.right)
+                }
+            }else{
+                this.pre.push(aux.node)
+            }
+            if (aux.siguiente === null) {
+                if (aux.anterior === null) aux = aux.anterior
+                else {
+                    this.pre.push(aux.anterior.node)
+                    console.log(aux.anterior.siguiente.node)
+                    if(aux.anterior.siguiente === null){
+                        aux = aux.anterior.anterior
+                        this.pre.push(aux)
+                    }else{
+                        aux = aux.anterior.siguiente
                     }
                 }
-                if(aux.siguiente === null)  {
-                    if(aux.anterior === null ) aux = aux.anterior
-                    else aux = aux.anterior.siguiente
-                }
-                else if(aux.anterior === null)aux = aux.siguiente 
             }
-            let acum = ''
-            for(let i = 0;i<this.pre.length;i++){
-                acum+= String(this.pre[i])
-            }
-            inpP01.value = acum
-            this.pre = []
-        } else {
-            if (this.raiz != null) this.generarListaDoble()
-            this.preorden()
+            else if (aux.anterior === null) aux = aux.siguiente
         }
+
+
+        let acum = ''
+        for (let i = 0; i < this.pre.length; i++) {
+            acum += String(this.pre[i])
+        }
+        inpP01.value = acum
+        this.pre = []
     }
     resolver() {
         this.generarListaDoble()
@@ -252,6 +299,16 @@ Pre.addEventListener("click", () => {
             return alert('Syntaxis Error')
         } else {
             calcu.preorden()
+        }
+    }
+})
+pos.addEventListener("click", () => {
+    if (inpP01 != 0) {
+        let comp = inpP01.value.charAt(inpP01.value.length - 1)
+        if (comp === '*' || comp === '/' || comp === '-' || comp === '+' || comp === '^') {
+            return alert('Syntaxis Error')
+        } else {
+            calcu.postorden()
         }
     }
 })
