@@ -180,13 +180,14 @@ class Calculadora {
         while (aux != null) {
             i++
             if(i>50)break
+
             if (aux.right != null) {
-                
-                if (aux.left != null) {
+                if (aux.right.left != null) {
                     aux = this.recordIz(aux.right)
-                    this.pre.push(aux.node)
+                    this.pre.push(aux.node)                    
                 }else{
                     this.pre.push(aux.right.node)
+                    this.pre.push(aux.node)
                 }
             }else{
                 this.pre.push(aux.node)
@@ -195,15 +196,8 @@ class Calculadora {
                 if (aux.anterior === null) aux = aux.anterior
                 else {
                     this.pre.push(aux.anterior.node)
-                    if(aux.anterior.siguiente === null){
-                        aux = aux.anterior.anterior
-                        this.pre.push(aux.node)
-                        console.log(aux)
-                        aux = aux.siguiente
-                        
-                    }else{
-                        aux = aux.anterior.siguiente
-                    }
+                    aux = aux.anterior.siguiente
+                    
                 }
             }
             else if (aux.anterior === null) aux = aux.siguiente
@@ -215,16 +209,20 @@ class Calculadora {
             acum += String(this.pre[i])
         }
         inpP01.value = acum
-        this.pre = []
+        
     }
     resolver() {
         this.generarListaDoble()
+        while(){
+            
+        }
 
     }
     borrar() {
         inpP01.value = 0
         this.raiz = null
         this.exp = null
+        this.pre = []
     }
     mostrar() {
         inpP01.value = this.exp
