@@ -176,9 +176,10 @@ class Calculadora {
         }
         let aux = this.raiz
         aux = this.recordIz(aux)
-        
+        let i = 0
         while (aux != null) {
-            
+            i++
+            if(i>50)break
             if (aux.right != null) {
                 
                 if (aux.left != null) {
@@ -194,10 +195,12 @@ class Calculadora {
                 if (aux.anterior === null) aux = aux.anterior
                 else {
                     this.pre.push(aux.anterior.node)
-                    console.log(aux.anterior.siguiente.node)
                     if(aux.anterior.siguiente === null){
                         aux = aux.anterior.anterior
-                        this.pre.push(aux)
+                        this.pre.push(aux.node)
+                        console.log(aux)
+                        aux = aux.siguiente
+                        
                     }else{
                         aux = aux.anterior.siguiente
                     }
