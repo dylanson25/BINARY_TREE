@@ -6,7 +6,6 @@ class Operacion {
         this.left = null
         this.siguiente = null
         this.anterior = null
-        this.preorden = new Array
     }
 }
 class Calculadora {
@@ -15,6 +14,7 @@ class Calculadora {
         this.exp = null
         this.op = 0
         this.punto = 0
+        this.pre = new Array()
     }
     agregar(x) {
         if (x >= 0 && x < 10) {
@@ -132,24 +132,31 @@ class Calculadora {
     }
     recorrerIzquierda(aux){
         while(aux.left != null){
-            this.preorden.push(aux.left.node)
+            this.pre.push(aux.left.node)
             aux = aux.left
         }
+        return aux
     }
     recorrerderecha(aux){
         while(aux.right != null){
-            this.preorden.push(aux.right.node)
-            aux = aux.left
+            this.pre.push(aux.right.node)
+            aux = aux.right
         }
+        return aux
     }
     preorden() {
         if (this.raiz != null && this.raiz.siguiente === null && this.raiz.anterior === null) {
             let aux = this.raiz
-            this.preorden.push(aux.node)
-            
-            for(let i = 0;i<this.preorden.length;i++){
-                console.log(this.preorden[i])
-            }  
+            this.pre.push(aux.node)
+            console.log(aux = this.recorrerIzquierda(aux))
+            /*while(aux != null){
+                aux = this.recorrerIzquierda(aux)
+                aux = this.recorrerderecha(aux)
+            }
+
+            for(let i = 0;i<this.pre.length;i++){
+                console.log(this.pre[i])
+            } */ 
         } else {
             if (this.raiz != null) this.generarListaDoble()
             this.preorden()
