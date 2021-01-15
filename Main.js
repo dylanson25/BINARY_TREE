@@ -179,17 +179,17 @@ class Calculadora {
         let i = 0
         while (aux != null) {
             i++
-            if(i>50)break
+            if (i > 50) break
 
             if (aux.right != null) {
                 if (aux.right.left != null) {
                     aux = this.recordIz(aux.right)
-                    this.pre.push(aux.node)                    
-                }else{
+                    this.pre.push(aux.node)
+                } else {
                     this.pre.push(aux.right.node)
                     this.pre.push(aux.node)
                 }
-            }else{
+            } else {
                 this.pre.push(aux.node)
             }
             if (aux.siguiente === null) {
@@ -197,25 +197,78 @@ class Calculadora {
                 else {
                     this.pre.push(aux.anterior.node)
                     aux = aux.anterior.siguiente
-                    
+
                 }
             }
             else if (aux.anterior === null) aux = aux.siguiente
         }
-
-
         let acum = ''
         for (let i = 0; i < this.pre.length; i++) {
             acum += String(this.pre[i])
         }
         inpP01.value = acum
+    }
+    recorrer(i) {
         
+        while (i<this.pre.length) {
+            this.pre[i-2] = this.pre[i]
+            i++
+        }
+        this.pre.pop()
+        this.pre.pop()
+       
     }
     resolver() {
         this.generarListaDoble()
-        while(){
-            
+        this.postorden()
+        let i = 0
+        while (this.pre.length != 1) {
+            let x, y
+            if (this.pre[i] === '*') {
+                x = Number(this.pre[i - 2])
+                y = Number(this.pre[i - 1])
+                this.pre[i] = x * y
+                this.recorrer(i)
+                i = 0
+                console.log(x + '*' + y + this.pre[0] )
+            } else if (this.pre[i] === '/') {
+                x = Number(this.pre[i - 2])
+                y = Number(this.pre[i - 1])
+                this.pre[i] = x / y
+                this.recorrer(i)
+    
+                i = 0
+            } else if (this.pre[i] === '+') {
+                x = Number(this.pre[i - 2])
+                y = Number(this.pre[i - 1])
+                this.pre[i] = x + y
+                this.recorrer(i)
+                
+                i = 0
+            } else if (this.pre[i] === '-') {
+                x = Number(this.pre[i - 2])
+                y = Number(this.pre[i - 1])
+                this.pre[i] = x - y
+                this.recorrer(i)
+                
+                i = 0
+            } else if (this.pre[i] === '^') {
+                x = Number(this.pre[i - 2])
+                y = Number(this.pre[i - 1])
+                this.pre[i] = Math.pow(x, y)
+                this.recorrer(i)
+                
+                i = 0
+            }
+            if(i>50)break
+            i++
         }
+        let acum = ''
+        for ( i = 0; i < this.pre.length; i++) {
+            acum += String(this.pre[i])
+        }
+        inpP01.value = acum
+        return console.log('listo')
 
     }
     borrar() {
