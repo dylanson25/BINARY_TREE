@@ -130,14 +130,31 @@ class Calculadora {
         console.log(this.raiz)
     }
     preorden() {
-        if (this.raiz.siguiente === null && this.raiz.anterior === null) {
-            let aux = new Operacion(this.raiz.node)
-            let i = 0
-            aux.lef = this.raiz.left
-            aux.right = this.raiz.right
-            console.log(aux)
+        if (this.raiz != null && this.raiz.siguiente === null && this.raiz.anterior === null) {
+            let preorden = new Array
+            let aux = this.raiz
+            preorden.push(aux.node)
+            while(aux.left != null){
+                preorden.push(aux.left.node)
+                aux = aux.left
+            }
+
+            while(aux.siguiente != null){
+                if(aux.right != null){
+                    let aux2 = aux
+                    while(aux2.left != null){
+                        preorden.push(aux2.left.node)
+                        aux2 = aux2.left  
+                    } 
+                }
+                aux = aux.left
+            }
+            for(let i = 0;i<preorden.length;i++){
+                console.log(preorden[i])
+            }  
         } else {
             if (this.raiz != null) this.generarListaDoble()
+            this.preorden()
         }
     }
     resolver() {
