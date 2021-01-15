@@ -142,25 +142,26 @@ class Calculadora {
             let aux = this.raiz
             this.pre.push(aux.node)
             aux = this.recorrerIzquierda(aux)
-            let i = 0
             while(aux != null ){
-                console.log(aux.node)
+
                 if(aux.right != null){
                     this.pre.push(aux.right.node)
                     if(aux.right.left != null){
                       aux =  this.recorrerIzquierda(aux.right)
                     }
                 }
-                if(aux.siguiente === null)   aux = aux.anterior.siguiente
+                if(aux.siguiente === null)  {
+                    if(aux.anterior === null ) aux = aux.anterior
+                    else aux = aux.anterior.siguiente
+                }
                 else if(aux.anterior === null)aux = aux.siguiente 
-
-                i++
-                if(i>50) break
             }
-
+            let acum = ''
             for(let i = 0;i<this.pre.length;i++){
-                console.log(this.pre[i])
-            } 
+                acum+= String(this.pre[i])
+            }
+            inpP01.value = acum
+            this.pre = []
         } else {
             if (this.raiz != null) this.generarListaDoble()
             this.preorden()
