@@ -137,32 +137,30 @@ class Calculadora {
         }
         return aux
     }
-    /*recorrerderecha(aux){
-        while(aux.right != null){
-            this.pre.push(aux.right.node)
-            aux = aux.right
-        }
-        return aux
-    }*/
-    
     preorden() {
         if (this.raiz != null && this.raiz.siguiente === null && this.raiz.anterior === null) {
             let aux = this.raiz
             this.pre.push(aux.node)
             aux = this.recorrerIzquierda(aux)
-            while(aux != null){
+            let i = 0
+            while(aux != null ){
+                console.log(aux.node)
                 if(aux.right != null){
                     this.pre.push(aux.right.node)
                     if(aux.right.left != null){
-                        this.recorrerIzquierda(aux.right)
+                      aux =  this.recorrerIzquierda(aux.right)
                     }
                 }
-                aux = aux.siguiente
+                if(aux.siguiente === null)   aux = aux.anterior.siguiente
+                else if(aux.anterior === null)aux = aux.siguiente 
+
+                i++
+                if(i>50) break
             }
 
             for(let i = 0;i<this.pre.length;i++){
                 console.log(this.pre[i])
-            }  
+            } 
         } else {
             if (this.raiz != null) this.generarListaDoble()
             this.preorden()
