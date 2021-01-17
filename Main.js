@@ -176,11 +176,8 @@ class Calculadora {
         }
         let aux = this.raiz
         aux = this.recordIz(aux)
-        let i = 0
+        
         while (aux != null) {
-            i++
-            if (i > 50) break
-
             if (aux.right != null) {
                 if (aux.right.left != null) {
                     aux = this.recordIz(aux.right)
