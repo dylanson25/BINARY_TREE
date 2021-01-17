@@ -257,7 +257,6 @@ class Calculadora {
                 
                 i = 0
             }
-            if(i>50)break
             i++
         }
         let acum = ''
